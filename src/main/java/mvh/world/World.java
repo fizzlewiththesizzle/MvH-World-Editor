@@ -1,6 +1,7 @@
 package mvh.world;
 
 import mvh.enums.Direction;
+import mvh.enums.Symbol;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -217,4 +218,45 @@ public class World {
         return world[0].length;
     }
 
+    public String worldString() {
+        //StringBuilder to append to and convert to final string at the end, it's easier to append to StringBuilder
+        //rather than concatenate to a single String
+        StringBuilder worldString_build = new StringBuilder();
+        String worldString_final;
+        //Draw top walls
+        worldString_build.append(String.valueOf(Symbol.WALL.getSymbol()).repeat(Math.max(0, getColumns() + 2))).append("\n");
+        //iterate through rows and columns in for loop
+        for(int row = 0; row <= getRows() - 1; row++){
+            //Wall at beginning of each row
+            worldString_build.append(Symbol.WALL.getSymbol());
+            for(int column = 0; column <= getColumns() - 1; column++){
+                //if entity is hero or monster
+                if(getEntity(row, column) instanceof Hero || getEntity(row, column) instanceof Monster){
+                    //if entity is alive place its symbol
+                    if(getEntity(row, column).isAlive()){
+                        worldString_build.append(getEntity(row, column).getSymbol());
+                    }
+                    //if entity is alive place dead symbol
+                    if(getEntity(row, column).isDead()){
+                        worldString_build.append(Symbol.DEAD.getSymbol());
+                    }
+                }
+                //if entity is wall place wall symbol
+                else if(getEntity(row, column) instanceof Wall){
+                    worldString_build.append(getEntity(row, column).getSymbol());
+                }
+                //everything else is floor
+                else{
+                    worldString_build.append(Symbol.FLOOR.getSymbol());
+                }
+            }
+            //Wall at end of each row
+            worldString_build.append(Symbol.WALL.getSymbol());
+            worldString_build.append("\n");
+        }
+        //Draw bottoms walls
+        worldString_build.append(String.valueOf(Symbol.WALL.getSymbol()).repeat(Math.max(0, getColumns() + 2)));
+        worldString_final = worldString_build.toString();
+        return worldString_final;
+    }
 }
