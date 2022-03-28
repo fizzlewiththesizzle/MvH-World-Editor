@@ -3,7 +3,9 @@ package mvh.app;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -21,10 +23,21 @@ public class MainController {
      * Setup the window state
      */
     @FXML
+    private TextField columnField;
+
+    @FXML
+    private TextField rowField;
+
+    @FXML
     private TextArea worldView;
 
     @FXML
+    private ChoiceBox<String> entityBox;
+
+    @FXML
     public void initialize() {
+        entityBox.getItems().add("Monster");
+        entityBox.getItems().add("Hero");
     }
 
     @FXML
@@ -35,6 +48,18 @@ public class MainController {
         info.setHeaderText("About");
         info.setTitle("About Program");
         info.show();
+    }
+
+    @FXML
+    void createWorld(ActionEvent event) {
+        int row = Integer.parseInt(rowField.getText());
+        int column = Integer.parseInt(columnField.getText());
+        System.out.println(row + " rows || " + column + " columns");
+        World world = new World(row, column);
+        String worldString = world.worldString();
+        System.out.println(worldString);
+        worldView.setStyle("-fx-font-family: Inconsolata; -fx-font-size: 40;");
+        worldView.setText(worldString);
     }
 
     @FXML
