@@ -17,7 +17,6 @@ public class MainController {
     //Store the data of editor
     private World world;
 
-
     //Getter and Setter Methods
     public World getWorld(){
         return this.world;
@@ -95,57 +94,77 @@ public class MainController {
 
     @FXML
     void addHero(ActionEvent event) {
-        int row = Integer.parseInt(heroRow.getText());
-        int column = Integer.parseInt(heroColumn.getText());
-        int armorStrength = Integer.parseInt(heroArmor.getText());
-        int health = Integer.parseInt(heroHealth.getText());
-        int weaponStrength = Integer.parseInt(heroWeapon.getText());
-        char symbol = heroSymbol.getText().charAt(0);
+        try{
+            int row = Integer.parseInt(heroRow.getText());
+            int column = Integer.parseInt(heroColumn.getText());
+            int armorStrength = Integer.parseInt(heroArmor.getText());
+            int health = Integer.parseInt(heroHealth.getText());
+            int weaponStrength = Integer.parseInt(heroWeapon.getText());
+            char symbol = heroSymbol.getText().charAt(0);
 
-        Hero hero = new Hero(health, symbol, weaponStrength,armorStrength);
-        getWorld().addEntity(row, column, hero);
-        String hero_status = "\nAdded Hero at (" + row + "," + column + ")!";
-        System.out.println(hero_status);
-        leftStatus.setText(hero_status);
+            Hero hero = new Hero(health, symbol, weaponStrength,armorStrength);
+            getWorld().addEntity(row, column, hero);
+            String hero_status = "Added Hero at (" + row + "," + column + ")!";
+            System.out.println("\n" + hero_status);
+            leftStatus.setStyle(null);
+            leftStatus.setText(hero_status);
 
-        String worldString = getWorld().worldString();
-        System.out.println(worldString);
-        worldView.setStyle("-fx-font-family: Inconsolata; -fx-font-size: 40;");
-        worldView.setText(worldString);
+            String worldString = getWorld().worldString();
+            System.out.println(worldString);
+            worldView.setStyle("-fx-font-family: Inconsolata; -fx-font-size: 40;");
+            worldView.setText(worldString);
+        } catch (NumberFormatException e) {
+            leftStatus.setStyle("-fx-text-fill: red;");
+            leftStatus.setText("Input must be numeric!");
+        }
+
     }
 
     @FXML
     void addMonster(ActionEvent event) {
-        int row = Integer.parseInt(monsterRow.getText());
-        int column = Integer.parseInt(monsterColumn.getText());
-        int health = Integer.parseInt(monsterHealth.getText());
-        char weapon = monsterWeapon.getValue().charAt(0);
-        WeaponType weapontype = WeaponType.getWeaponType(weapon);
-        char symbol = monsterSymbol.getText().charAt(0);
+        try{
+            int row = Integer.parseInt(monsterRow.getText());
+            int column = Integer.parseInt(monsterColumn.getText());
+            int health = Integer.parseInt(monsterHealth.getText());
+            char weapon = monsterWeapon.getValue().charAt(0);
+            WeaponType weapontype = WeaponType.getWeaponType(weapon);
+            char symbol = monsterSymbol.getText().charAt(0);
 
-        Monster monster = new Monster(health, symbol, weapontype);
-        getWorld().addEntity(row, column, monster);
-        String monsterStatus = "\nAdded Monster at (" + row + "," + column + ")!";
-        System.out.println(monsterStatus);
-        leftStatus.setText(monsterStatus);
+            Monster monster = new Monster(health, symbol, weapontype);
+            getWorld().addEntity(row, column, monster);
+            String monsterStatus = "Added Monster at (" + row + "," + column + ")!";
+            System.out.println("\n" + monsterStatus);
+            leftStatus.setStyle(null);
+            leftStatus.setText(monsterStatus);
 
-        String worldString = getWorld().worldString();
-        System.out.println(worldString);
-        worldView.setStyle("-fx-font-family: Inconsolata; -fx-font-size: 40;");
-        worldView.setText(worldString);
+            String worldString = getWorld().worldString();
+            System.out.println(worldString);
+            worldView.setStyle("-fx-font-family: Inconsolata; -fx-font-size: 40;");
+            worldView.setText(worldString);
+        } catch (NumberFormatException e) {
+            leftStatus.setStyle("-fx-text-fill: red;");
+            leftStatus.setText("Input must be numeric!");
+        }
     }
 
     @FXML
     void createWorld(ActionEvent event) {
-        int row = Integer.parseInt(rowField.getText());
-        int column = Integer.parseInt(columnField.getText());
-        System.out.println(row + " rows || " + column + " columns");
-        World world = new World(row, column);
-        setWorld(world);
-        String worldString = getWorld().worldString();
-        System.out.println(worldString);
-        worldView.setStyle("-fx-font-family: Inconsolata; -fx-font-size: 40;");
-        worldView.setText(worldString);
+        try{
+            int row = Integer.parseInt(rowField.getText());
+            int column = Integer.parseInt(columnField.getText());
+            System.out.println(row + " rows || " + column + " columns");
+            World world = new World(row, column);
+            setWorld(world);
+            String worldString = getWorld().worldString();
+            System.out.println(worldString);
+            worldView.setStyle("-fx-font-family: Inconsolata; -fx-font-size: 40;");
+            worldView.setText(worldString);
+            leftStatus.setStyle(null);
+            leftStatus.setText("New " + row + "x" + column + " world created!");
+        } catch (NumberFormatException e) {
+            leftStatus.setStyle("-fx-text-fill: red;");
+            leftStatus.setText("Input must be numeric!");
+        }
     }
 
     @FXML
