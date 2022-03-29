@@ -6,18 +6,29 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import mvh.enums.WeaponType;
 import mvh.util.Reader;
 import mvh.world.*;
 
 import java.io.File;
+import java.util.Objects;
 
 public class MainController {
 
     //Store the data of editor
     private World world;
+
+
+    //Getter and Setter Methods
+    public World getWorld(){
+        return this.world;
+    }
+
+    public void setWorld(World world){
+        this.world = world;
+    }
 
     /**
      * Setup the window state
@@ -29,15 +40,47 @@ public class MainController {
     private TextField rowField;
 
     @FXML
+    private TextField heroArmor;
+
+    @FXML
+    private TextField heroColumn;
+
+    @FXML
+    private TextField heroHealth;
+
+    @FXML
+    private TextField heroRow;
+
+    @FXML
+    private TextField heroSymbol;
+
+    @FXML
+    private TextField heroWeapon;
+
+    @FXML
+    private TextField monsterColumn;
+
+    @FXML
+    private TextField monsterHealth;
+
+    @FXML
+    private TextField monsterRow;
+
+    @FXML
+    private TextField monsterSymbol;
+
+    @FXML
     private TextArea worldView;
 
     @FXML
-    private ChoiceBox<String> entityBox;
+    private ChoiceBox<String> monsterWeapon;
 
     @FXML
     public void initialize() {
-        entityBox.getItems().add("Monster");
-        entityBox.getItems().add("Hero");
+        monsterWeapon.setValue("Select Weapon");
+        monsterWeapon.getItems().add("Club(2)");
+        monsterWeapon.getItems().add("Axe(3)");
+        monsterWeapon.getItems().add("Sword(4)");
     }
 
     @FXML
@@ -51,12 +94,51 @@ public class MainController {
     }
 
     @FXML
+    void addHero(ActionEvent event) {
+        int row = Integer.parseInt(heroRow.getText());
+        int column = Integer.parseInt(heroColumn.getText());
+        int armorStrength = Integer.parseInt(heroArmor.getText());
+        int health = Integer.parseInt(heroHealth.getText());
+        int weaponStrength = Integer.parseInt(heroWeapon.getText());
+        char symbol = heroSymbol.getText().charAt(0);
+
+        Hero hero = new Hero(health, symbol, weaponStrength,armorStrength);
+        getWorld().addEntity(row, column, hero);
+        System.out.println("\nAdded Hero at (" + row + "," + column + ")");
+
+        String worldString = getWorld().worldString();
+        System.out.println(worldString);
+        worldView.setStyle("-fx-font-family: Inconsolata; -fx-font-size: 40;");
+        worldView.setText(worldString);
+    }
+
+    @FXML
+    void addMonster(ActionEvent event) {
+        int row = Integer.parseInt(monsterRow.getText());
+        int column = Integer.parseInt(monsterColumn.getText());
+        int health = Integer.parseInt(monsterHealth.getText());
+        char weapon = monsterWeapon.getValue().charAt(0);
+        WeaponType weapontype = WeaponType.getWeaponType(weapon);
+        char symbol = monsterSymbol.getText().charAt(0);
+
+        Monster monster = new Monster(health, symbol, weapontype);
+        getWorld().addEntity(row, column, monster);
+        System.out.println("\nAdded Monster at (" + row + "," + column + ")");
+
+        String worldString = getWorld().worldString();
+        System.out.println(worldString);
+        worldView.setStyle("-fx-font-family: Inconsolata; -fx-font-size: 40;");
+        worldView.setText(worldString);
+    }
+
+    @FXML
     void createWorld(ActionEvent event) {
         int row = Integer.parseInt(rowField.getText());
         int column = Integer.parseInt(columnField.getText());
         System.out.println(row + " rows || " + column + " columns");
         World world = new World(row, column);
-        String worldString = world.worldString();
+        setWorld(world);
+        String worldString = getWorld().worldString();
         System.out.println(worldString);
         worldView.setStyle("-fx-font-family: Inconsolata; -fx-font-size: 40;");
         worldView.setText(worldString);
@@ -70,7 +152,8 @@ public class MainController {
         File fileOpen = fileChooser.showOpenDialog(new Stage());
         System.out.println(fileOpen);
         World world = Reader.loadWorld(fileOpen);
-        String worldString = world.worldString();
+        setWorld(world);
+        String worldString = getWorld().worldString();
         System.out.println(worldString);
         worldView.setStyle("-fx-font-family: Inconsolata; -fx-font-size: 40;");
         worldView.setText(worldString);

@@ -10,6 +10,8 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -51,10 +53,10 @@
               </textFill>
             </Label>
                   <TextField fx:id="rowField" layoutX="15.0" layoutY="50.0" promptText="Enter World Row Size" />
-                  <TextField fx:id="columnField" layoutX="15.0" layoutY="100.0" promptText="Enter World Column Size" />
-                  <Button layoutX="18.0" layoutY="140.0" mnemonicParsing="false" onAction="#createWorld" text="Create" />
+                  <TextField fx:id="columnField" layoutX="15.0" layoutY="85.0" promptText="Enter World Column Size" />
+                  <Button layoutX="18.0" layoutY="120.0" mnemonicParsing="false" onAction="#createWorld" text="Create" />
                   <Separator layoutX="11.0" layoutY="180.0" prefWidth="200.0" />
-                  <Label alignment="CENTER" layoutX="14.0" layoutY="200.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Entity" textAlignment="CENTER" wrapText="false">
+                  <Label alignment="CENTER" layoutX="14.0" layoutY="200.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Add Entity" textAlignment="CENTER" wrapText="false">
                      <font>
                         <Font size="18.0" fx:id="x11" />
                      </font>
@@ -62,7 +64,39 @@
                         <Color red="0.624" green="0.624" blue="0.624" fx:id="x21" />
                      </textFill>
                   </Label>
-                  <ChoiceBox fx:id="entityBox" layoutX="15.0" layoutY="237.0" prefWidth="150.0" />
+                  <TabPane layoutX="11.0" layoutY="227.0" prefHeight="280.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="Hero">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="250.0" prefWidth="200.0">
+                                 <children>
+                                    <TextField fx:id="heroSymbol" layoutX="15.0" layoutY="15.0" promptText="Symbol" />
+                                    <TextField fx:id="heroHealth" layoutX="15.0" layoutY="50.0" promptText="Health" />
+                                    <TextField fx:id="heroWeapon" layoutX="15.0" layoutY="85.0" promptText="Weapon Strength" />
+                                    <TextField fx:id="heroArmor" layoutX="15.0" layoutY="120.0" promptText="Armor Strength" />
+                                    <Button layoutX="14.0" layoutY="200.0" mnemonicParsing="false" onAction="#addHero" text="Add Hero" />
+                                    <TextField fx:id="heroRow" layoutX="15.0" layoutY="155.0" prefHeight="25.0" prefWidth="51.0" promptText="Row" />
+                                    <TextField fx:id="heroColumn" layoutX="82.0" layoutY="155.0" prefHeight="25.0" prefWidth="82.0" promptText="Column" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="Monster">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <TextField fx:id="monsterSymbol" layoutX="15.0" layoutY="15.0" promptText="Symbol" />
+                                    <TextField fx:id="monsterHealth" layoutX="15.0" layoutY="50.0" promptText="Health" />
+                                    <Button layoutX="15.0" layoutY="165.0" mnemonicParsing="false" onAction="#addMonster" text="Add Monster" />
+                                    <TextField fx:id="monsterRow" layoutX="15.0" layoutY="120.0" prefHeight="25.0" prefWidth="51.0" promptText="Row" />
+                                    <TextField fx:id="monsterColumn" layoutX="82.0" layoutY="120.0" prefHeight="25.0" prefWidth="82.0" promptText="Column" />
+                                    <ChoiceBox fx:id="monsterWeapon" layoutX="15.0" layoutY="82.0" prefWidth="150.0" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                    </tabs>
+                  </TabPane>
           </children>
         </AnchorPane>
         <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
