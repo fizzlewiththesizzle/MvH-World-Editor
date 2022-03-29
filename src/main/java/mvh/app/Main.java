@@ -3,6 +3,7 @@ package mvh.app;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -29,6 +30,7 @@ public class Main extends Application {
         scene.getStylesheets().add("http://fonts.googleapis.com/css?family=Inconsolata");
         stage.setScene(scene);
         stage.setTitle("MvH World Editor 1.0");
+        stage.getIcons().add(new Image("/rupee.png"));
         stage.show();
     }
 }
