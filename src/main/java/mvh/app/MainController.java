@@ -89,12 +89,18 @@ public class MainController {
     private TextField removeRow;
 
     @FXML
+    private TextField viewColumn;
+
+    @FXML
+    private TextField viewRow;
+
+    @FXML
     public void initialize() {
         monsterWeapon.setValue("Select Weapon");
         monsterWeapon.getItems().add("Club(2)");
         monsterWeapon.getItems().add("Axe(3)");
         monsterWeapon.getItems().add("Sword(4)");
-        statList.getItems().add("Create an Entity");
+        statList.getItems().add("Create or Select an Entity");
     }
 
     @FXML
@@ -139,7 +145,10 @@ public class MainController {
             leftStatus.setStyle("-fx-text-fill: red;");
             leftStatus.setText("Input must be numeric!");
         }
-
+        catch(NullPointerException e){
+            leftStatus.setStyle("-fx-text-fill: red;");
+            leftStatus.setText("Load or create a world first!");
+        }
     }
 
     @FXML
@@ -164,7 +173,7 @@ public class MainController {
             statList.getItems().add("Symbol: " + symbol);
             statList.getItems().add("Health: " + health);
             statList.getItems().add("Weapon: " + weapontype);
-            statList.getItems().add("Armor Strength: " + weapontype.getWeaponStrength());
+            statList.getItems().add("Weapon Strength: " + weapontype.getWeaponStrength());
 
             String worldString = getWorld().worldString();
             System.out.println(worldString);
@@ -173,6 +182,10 @@ public class MainController {
         } catch (NumberFormatException e) {
             leftStatus.setStyle("-fx-text-fill: red;");
             leftStatus.setText("Input must be numeric!");
+        }
+        catch(NullPointerException e){
+            leftStatus.setStyle("-fx-text-fill: red;");
+            leftStatus.setText("Load or create a world first!");
         }
     }
 
@@ -309,5 +322,58 @@ public class MainController {
             pw.close();
         }
         System.out.println(fileSave);
+    }
+
+    public void viewEntity(ActionEvent actionEvent) {
+        try{
+            int row = Integer.parseInt(viewRow.getText());
+            int column = Integer.parseInt(viewColumn.getText());
+            Entity entity = getWorld().getEntity(row, column);
+
+            if(entity instanceof Hero){
+                char symbol = entity.getSymbol();
+                int health = entity.getHealth();
+                statList.getItems().clear();
+                statList.getItems().add("Type: Hero");
+                statList.getItems().add("Symbol: " + symbol);
+                statList.getItems().add("Health: " + health);
+                statList.getItems().add("Weapon Strength: " + entity.weaponStrength());
+                statList.getItems().add("Armor Strength: " + entity.armorStrength());
+            }
+
+            else if(entity instanceof Monster){
+                char symbol = entity.getSymbol();
+                int health = entity.getHealth();
+                char weapon = 0;
+                WeaponType weapontype = null;
+                if(entity.weaponStrength() == 2){
+                    weapon = 'C';
+                    weapontype = WeaponType.getWeaponType(weapon);
+                }
+                else if(entity.weaponStrength() == 3){
+                    weapon = 'A';
+                    weapontype = WeaponType.getWeaponType(weapon);
+                }
+                else if(entity.weaponStrength() == 4){
+                    weapon = 'S';
+                    weapontype = WeaponType.getWeaponType(weapon);
+                }
+                statList.getItems().clear();
+                statList.getItems().add("Type: Monster");
+                statList.getItems().add("Symbol: " + symbol);
+                statList.getItems().add("Health: " + health);
+                statList.getItems().add("Weapon: " + weapontype);
+                statList.getItems().add("Weapon Strength: " + entity.weaponStrength());
+            }
+            else{
+                char symbol = '.';
+                statList.getItems().clear();
+                statList.getItems().add("Type: Floor");
+                statList.getItems().add("Symbol: " + symbol);
+            }
+        } catch (NumberFormatException e) {
+            leftStatus.setStyle("-fx-text-fill: red;");
+            leftStatus.setText("Input must be numeric!");
+        }
     }
 }

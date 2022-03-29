@@ -123,7 +123,18 @@
         <AnchorPane>
           <children>
             <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Stats" textAlignment="CENTER" textFill="$x2" wrapText="false" />
-                  <ListView fx:id="statList" layoutX="11.0" layoutY="41.0" prefHeight="118.0" prefWidth="200.0" />
+                  <ListView fx:id="statList" layoutX="14.0" layoutY="41.0" prefHeight="119.0" prefWidth="200.0" />
+                  <Label alignment="CENTER" layoutX="14.0" layoutY="180.0" style="&#10;" text="Select Entity" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x12" />
+                     </font>
+                     <textFill>
+                        <Color red="0.624" green="0.624" blue="0.624" fx:id="x22" />
+                     </textFill>
+                  </Label>
+                  <TextField fx:id="viewRow" layoutX="14.0" layoutY="216.0" promptText="Entity Row" />
+                  <TextField fx:id="viewColumn" layoutX="14.0" layoutY="251.0" promptText="Entity Column" />
+                  <Button layoutX="14.0" layoutY="296.0" mnemonicParsing="false" onAction="#viewEntity" text="View" />
           </children>
         </AnchorPane>
       </items>
