@@ -1,6 +1,7 @@
 package mvh.app;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
@@ -10,7 +11,6 @@ import mvh.util.Reader;
 import mvh.world.*;
 
 import java.io.File;
-import java.util.Objects;
 
 public class MainController {
 
@@ -36,6 +36,9 @@ public class MainController {
     private TextField rowField;
 
     @FXML
+    private Tab heroTab;
+
+    @FXML
     private TextField heroArmor;
 
     @FXML
@@ -57,6 +60,12 @@ public class MainController {
     private Label leftStatus;
 
     @FXML
+    private Label rightStatus;
+
+    @FXML
+    private Tab monsterTab;
+
+    @FXML
     private TextField monsterColumn;
 
     @FXML
@@ -75,11 +84,21 @@ public class MainController {
     private ChoiceBox<String> monsterWeapon;
 
     @FXML
+    private ListView<String> statList;
+
+    @FXML
+    private TextField removeColumn;
+
+    @FXML
+    private TextField removeRow;
+
+    @FXML
     public void initialize() {
         monsterWeapon.setValue("Select Weapon");
         monsterWeapon.getItems().add("Club(2)");
         monsterWeapon.getItems().add("Axe(3)");
         monsterWeapon.getItems().add("Sword(4)");
+        statList.getItems().add("Create an Entity");
     }
 
     @FXML
@@ -109,6 +128,13 @@ public class MainController {
             leftStatus.setStyle(null);
             leftStatus.setText(hero_status);
 
+            statList.getItems().clear();
+            statList.getItems().add("Type: Hero");
+            statList.getItems().add("Symbol: " + symbol);
+            statList.getItems().add("Health: " + health);
+            statList.getItems().add("Weapon Strength: " + weaponStrength);
+            statList.getItems().add("Armor Strength: " + armorStrength);
+
             String worldString = getWorld().worldString();
             System.out.println(worldString);
             worldView.setStyle("-fx-font-family: Inconsolata; -fx-font-size: 40;");
@@ -137,6 +163,13 @@ public class MainController {
             leftStatus.setStyle(null);
             leftStatus.setText(monsterStatus);
 
+            statList.getItems().clear();
+            statList.getItems().add("Type: Monster");
+            statList.getItems().add("Symbol: " + symbol);
+            statList.getItems().add("Health: " + health);
+            statList.getItems().add("Weapon: " + weapontype);
+            statList.getItems().add("Armor Strength: " + weapontype.getWeaponStrength());
+
             String worldString = getWorld().worldString();
             System.out.println(worldString);
             worldView.setStyle("-fx-font-family: Inconsolata; -fx-font-size: 40;");
@@ -161,6 +194,7 @@ public class MainController {
             worldView.setText(worldString);
             leftStatus.setStyle(null);
             leftStatus.setText("New " + row + "x" + column + " world created!");
+            rightStatus.setText("World created!");
         } catch (NumberFormatException e) {
             leftStatus.setStyle("-fx-text-fill: red;");
             leftStatus.setText("Input must be numeric!");
@@ -180,6 +214,7 @@ public class MainController {
         System.out.println(worldString);
         worldView.setStyle("-fx-font-family: Inconsolata; -fx-font-size: 40;");
         worldView.setText(worldString);
+        rightStatus.setText("World loaded!");
     }
 
     @FXML
@@ -187,4 +222,46 @@ public class MainController {
         System.exit(0);
     }
 
+    public void heroSelect(Event event) {
+        if(heroTab.isSelected()){
+            leftStatus.setText("Currently adding heroes");
+        }
+    }
+
+    public void monsterSelect(Event event) {
+        if(monsterTab.isSelected()){
+            leftStatus.setText("Currently adding monsters");
+        }
+    }
+
+    public void removeEntity(ActionEvent actionEvent) {
+        try{
+            int row = Integer.parseInt(removeRow.getText());
+            int column = Integer.parseInt(removeColumn.getText());
+            Entity entity = getWorld().getEntity(row, column);
+            String type = "";
+
+            if(entity instanceof Hero){
+                type = "Hero";
+            }
+            if(entity instanceof Monster){
+                type = "Monster";
+            }
+
+            getWorld().addEntity(row, column, null);
+            String removeStatus = "Removed " + type + " at (" + row + "," + column + ")!";
+            System.out.println("\n" + removeStatus);
+            leftStatus.setStyle(null);
+            leftStatus.setText(removeStatus);
+
+            String worldString = getWorld().worldString();
+            System.out.println(worldString);
+            worldView.setStyle("-fx-font-family: Inconsolata; -fx-font-size: 40;");
+            worldView.setText(worldString);
+
+        } catch (NumberFormatException e) {
+            leftStatus.setStyle("-fx-text-fill: red;");
+            leftStatus.setText("Input must be numeric!");
+        }
+    }
 }
