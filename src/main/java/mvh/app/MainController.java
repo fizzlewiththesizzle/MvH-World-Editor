@@ -11,6 +11,8 @@ import mvh.util.Reader;
 import mvh.world.*;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 
 public class MainController {
 
@@ -36,9 +38,6 @@ public class MainController {
     private TextField rowField;
 
     @FXML
-    private Tab heroTab;
-
-    @FXML
     private TextField heroArmor;
 
     @FXML
@@ -61,9 +60,6 @@ public class MainController {
 
     @FXML
     private Label rightStatus;
-
-    @FXML
-    private Tab monsterTab;
 
     @FXML
     private TextField monsterColumn;
@@ -223,15 +219,20 @@ public class MainController {
     }
 
     public void heroSelect(Event event) {
-        if(heroTab.isSelected()){
+        if(leftStatus != null){
+            leftStatus.setStyle(null);
             leftStatus.setText("Currently adding heroes");
         }
     }
 
     public void monsterSelect(Event event) {
-        if(monsterTab.isSelected()){
-            leftStatus.setText("Currently adding monsters");
-        }
+        leftStatus.setStyle(null);
+        leftStatus.setText("Currently adding monsters");
+    }
+
+    public void removeSelect(Event event) {
+        leftStatus.setStyle(null);
+        leftStatus.setText("Currently removing entities");
     }
 
     public void removeEntity(ActionEvent actionEvent) {
@@ -263,5 +264,50 @@ public class MainController {
             leftStatus.setStyle("-fx-text-fill: red;");
             leftStatus.setText("Input must be numeric!");
         }
+    }
+
+    public void saveFile(ActionEvent actionEvent) throws FileNotFoundException {
+        StringBuilder fileBuild = new StringBuilder();
+        fileBuild.append(getWorld().getRows()).append("\n").append(getWorld().getColumns());
+
+        for(int row = 0; row <= getWorld().getRows() - 1; row++){
+            for(int column = 0; column <= getWorld().getColumns() - 1; column++){
+                if(getWorld().getEntity(row, column) instanceof Hero){
+                    Entity hero = getWorld().getEntity(row, column);
+                    fileBuild.append("\n").append(row).append(",").append(column).append(",").append("HERO").append(",").append(hero.getSymbol()).append(",").append(hero.getHealth()).append(",").append(hero.weaponStrength()).append(",").append(hero.armorStrength());
+                }
+                else if(getWorld().getEntity(row, column) instanceof Monster){
+                    Entity monster = getWorld().getEntity(row, column);
+                    char weapon = 0;
+                    if(monster.weaponStrength() == 2){
+                        weapon = 'C';
+                    }
+                    else if(monster.weaponStrength() == 3){
+                        weapon = 'A';
+                    }
+                    else if(monster.weaponStrength() == 4){
+                        weapon = 'S';
+                    }
+                    fileBuild.append("\n").append(row).append(",").append(column).append(",").append("MONSTER").append(",").append(monster.getSymbol()).append(",").append(monster.getHealth()).append(",").append(weapon);
+                }
+                else{
+                    fileBuild.append("\n").append(row).append(",").append(column);
+                }
+            }
+        }
+        String fileString = fileBuild.toString();
+        System.out.println("\n" + fileString);
+
+        final FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File("."));
+        fileChooser.setInitialFileName("world.txt");
+        File fileSave = fileChooser.showSaveDialog(new Stage());
+
+        if(fileSave != null){
+            PrintWriter pw = new PrintWriter(fileSave);
+            pw.print(fileString);
+            pw.close();
+        }
+        System.out.println(fileSave);
     }
 }
