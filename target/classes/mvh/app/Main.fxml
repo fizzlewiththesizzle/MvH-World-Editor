@@ -72,8 +72,8 @@
                                  <children>
                                     <TextField fx:id="heroSymbol" layoutX="15.0" layoutY="15.0" promptText="Symbol" />
                                     <TextField fx:id="heroHealth" layoutX="15.0" layoutY="50.0" promptText="Health" />
-                                    <TextField fx:id="heroWeapon" layoutX="15.0" layoutY="85.0" promptText="Weapon" />
-                                    <TextField fx:id="heroArmor" layoutX="15.0" layoutY="120.0" promptText="Armor" />
+                                    <TextField fx:id="heroWeapon" layoutX="15.0" layoutY="85.0" promptText="Weapon Strength" />
+                                    <TextField fx:id="heroArmor" layoutX="15.0" layoutY="120.0" promptText="Armor Strength" />
                                     <Button layoutX="14.0" layoutY="200.0" mnemonicParsing="false" onAction="#addHero" text="Add Hero" />
                                     <TextField fx:id="heroRow" layoutX="15.0" layoutY="155.0" prefHeight="25.0" prefWidth="51.0" promptText="Row" />
                                     <TextField fx:id="heroColumn" layoutX="82.0" layoutY="155.0" prefHeight="25.0" prefWidth="82.0" promptText="Column" />
@@ -118,7 +118,7 @@
     </SplitPane>
     <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
       <children>
-        <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="Left status" HBox.hgrow="ALWAYS">
+        <Label fx:id="leftStatus" maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="Left status" HBox.hgrow="ALWAYS">
           <font>
             <Font size="11.0" fx:id="x3" />
           </font>

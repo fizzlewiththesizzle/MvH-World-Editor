@@ -2,10 +2,7 @@ package mvh.app;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import mvh.enums.WeaponType;
@@ -58,6 +55,9 @@ public class MainController {
     private TextField heroWeapon;
 
     @FXML
+    private Label leftStatus;
+
+    @FXML
     private TextField monsterColumn;
 
     @FXML
@@ -104,7 +104,9 @@ public class MainController {
 
         Hero hero = new Hero(health, symbol, weaponStrength,armorStrength);
         getWorld().addEntity(row, column, hero);
-        System.out.println("\nAdded Hero at (" + row + "," + column + ")");
+        String hero_status = "\nAdded Hero at (" + row + "," + column + ")!";
+        System.out.println(hero_status);
+        leftStatus.setText(hero_status);
 
         String worldString = getWorld().worldString();
         System.out.println(worldString);
@@ -123,7 +125,9 @@ public class MainController {
 
         Monster monster = new Monster(health, symbol, weapontype);
         getWorld().addEntity(row, column, monster);
-        System.out.println("\nAdded Monster at (" + row + "," + column + ")");
+        String monsterStatus = "\nAdded Monster at (" + row + "," + column + ")!";
+        System.out.println(monsterStatus);
+        leftStatus.setText(monsterStatus);
 
         String worldString = getWorld().worldString();
         System.out.println(worldString);
