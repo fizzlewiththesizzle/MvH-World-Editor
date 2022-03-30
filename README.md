@@ -5,6 +5,16 @@ game from Assignment 2
 
 ![](src/main/resources/screenshot.png)
 
+## Usage
+* To run the program as a .jar file using JavaFX, first make sure you have the latest version of JavaFX installed
+* Using an IDE such as IntelliJ IDEA, create a run configuration using the .jar file
+  * Look for an option called "VM Options" or similar in your .jar file run configuration settings
+  * Add the following arguments depending on your JavaFX lib directory
+  * ```bash
+    --module-path "JavaFX lib folder path here" --add-modules=javafx.controls,javafx.fxml
+    ```
+  * Run the configuration
+
 ## Program
 
 The program consists of 4 main components:
