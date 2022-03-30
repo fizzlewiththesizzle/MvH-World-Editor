@@ -1,4 +1,4 @@
-# MvH World Editor (v1.0)
+# ![](src/main/resources/rupee-50px.png) MvH World Editor (v1.0)
 
 Monsters vs. Heroes (MvH) World Editor is a JavaFX GUI application to create, load, and edit world files for the MvH 
 game from Assignment 2
