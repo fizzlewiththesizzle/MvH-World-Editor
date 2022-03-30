@@ -6,6 +6,12 @@ import mvh.enums.Symbol;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/*
+  Name: Faisal Islam
+  Date: March 29, 2022
+  Tutorial: T10- Tejash
+ */
+
 /**
  * A World is a 2D grid of entities, null Spots are floor spots
  * @author Jonathan Hudson
@@ -218,6 +224,11 @@ public class World {
         return world[0].length;
     }
 
+    /**
+     * String method that displays the map of the world with surrounding walls
+     * Using my existing code from A2
+     * @return String of world map
+     */
     public String worldString() {
         //StringBuilder to append to and convert to final string at the end, it's easier to append to StringBuilder
         //rather than concatenate to a single String

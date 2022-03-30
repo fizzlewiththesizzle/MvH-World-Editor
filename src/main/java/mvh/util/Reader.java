@@ -8,6 +8,12 @@ import mvh.world.World;
 import java.io.*;
 import java.util.*;
 
+/*
+  Name: Faisal Islam
+  Date: March 29, 2022
+  Tutorial: T10- Tejash
+ */
+
 /**
  * Class to assist reading in world file
  * @author Jonathan Hudson
